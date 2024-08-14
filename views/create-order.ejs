@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Orden de Trabajo</title>
+    <link rel="stylesheet" href="resource/css/style.css">
+</head>
+<body>
+    <h1>Crear Orden de Trabajo</h1>
+    
+    <% if (login) { %>           
+        <h2>Usuario conectado: <strong><%= name %></strong></h2>                        
+        <a href="/logout" class="a-logout">Logout</a>
+        <div class="register-form">
+            <form action="/create-order" method="POST">
+                <!-- Campos del formulario -->
+                <div>
+                    <label for="username">Nombre de Usuario:</label>
+                    <input type="text" name="username" id="username" required>
+                </div>
+                <div>
+                    <label for="workshop_type">Tipo de taller:</label>
+                    <select name="workshop_type" id="workshop_type">
+                        <option value="Automotriz">Automotriz</option>
+                        <option value="Chapa y Pintura">Chapa y Pintura</option>
+                        <option value="Sacabollos">Sacabollos</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="description">Descripción:</label>
+                    <textarea name="description" id="description" required></textarea>
+                </div>
+                <div>
+                    <label for="brand">Marca:</label>
+                    <input type="text" name="brand" id="brand" required>
+                </div>
+                <div>
+                    <label for="model">Modelo:</label>
+                    <input type="text" name="model" id="model" required>
+                </div>
+                <div>
+                    <label for="year">Año:</label>
+                    <input type="number" name="year" id="year" required>
+                </div>
+                <div>
+                    <label for="chassis_number">Número de Chasis:</label>
+                    <input type="text" name="chassis_number" id="chassis_number" required>
+                </div>
+                <div>
+                    <label for="license_plate">Placa:</label>
+                    <input type="text" name="license_plate" id="license_plate" required>
+                </div>
+                <div>
+                    <label for="color">Color:</label>
+                    <input type="text" name="color" id="color" required>
+                </div>
+                <button type="submit">Crear Orden</button>
+            </form>
+        </div>
+        <%} else { %>
+            <h1><strong><%= name %></strong></h1>   
+            <a href="login" class="a-login">Ir a Login</a>
+        <% } %>
+</body>
+</html>
