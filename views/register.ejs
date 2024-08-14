@@ -21,8 +21,8 @@
 
             <label for="rol">Rol</label>
             <select name="rol" id="rol" class="select-css">
-                <option value="admin" selected>Admin</option>
-                <option value="data entry">Data entry</option>
+                <option value="taller" selected>Taller</option>
+                <option value="aseguradora">Aseguradora</option>
             </select>
 
             <label for="">password</label>
@@ -44,9 +44,15 @@
                 icon: '<%= alertIcon %>',
                 showConfirmButton: <%= showConfirmButton %>,
                 timer: <%= timer %>
-                }).then(() => {
-                    window.location = '/ <%= ruta %>'
-                })
+            }).then(() => {
+                // Si la alerta es de éxito, redirige al login
+                if ('<%= alertIcon %>' === 'success') {
+                    window.location = '/login';
+                } else {
+                    // Si la alerta es de error, permanece en register
+                    window.location = '/register';
+                }
+            });
         </script>
         <% } %>
 

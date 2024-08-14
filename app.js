@@ -73,50 +73,64 @@ app.post('/register', async (req, res) => {
         });
     });
 
-app.post('/auth', async (req, res) => {
-    const user = req.body.user;
-    const pass = req.body.pass;
-
-    let passwordHaash = await bcryptjs.hash(pass, 8);
-    if (user && pass) {
-        connection.query('SELECT * FROM users WHERE user = ?', [user], async (error, results) => {
-            if (results.length == 0 || !(await bcryptjs.compare(pass, results[0].pass))) {
-                res.render('login', {
-                    alert: true,
-                    alertTitle: "Error",
-                    alertMessage: 'Usuario y/o password incorrectas',
-                    alertIcon: 'error',
-                    showConfirmButton: true,
-                    timer: false,
-                    ruta: 'login'
-                });
-            } else {
-                req.session.loggedin = true;
-                req.session.name = results[0].name
-
-                res.render('login', {
-                    alert: true,
-                    alertTitle: "Conexión exisota",
-                    alertMessage: '¡Login Correcto!',
-                    alertIcon: 'success',
-                    showConfirmButton: false,
-                    timer: 1500,
-                    ruta: ''
-                });
-            }
-        })
-    } else {
-        res.render('login', {
-            alert: true,
-            alertTitle: "Advertencia",
-            alertMessage: 'Por Favor ingrese un usuario y/o password!',
-            alertIcon: 'warning',
-            showConfirmButton: true,
-            timer: 1500,
-            ruta: 'login'
-        });
-    }
-})
+    app.post('/auth', async (req, res) => {
+        const user = req.body.user;
+        const pass = req.body.pass;
+    
+        if (user && pass) {
+            connection.query('SELECT * FROM users WHERE user = ?', [user], async (error, results) => {
+                if (error) {
+                    console.log(error);
+                    res.render('login', {
+                        alert: true,
+                        alertTitle: "Error",
+                        alertMessage: 'Error en la base de datos',
+                        alertIcon: 'error',
+                        showConfirmButton: true,
+                        timer: false,
+                        ruta: 'login'
+                    });
+                } else if (results.length == 0 || !(await bcryptjs.compare(pass, results[0].pass))) {
+                    res.render('login', {
+                        alert: true,
+                        alertTitle: "Error",
+                        alertMessage: 'Usuario y/o contraseña incorrectos',
+                        alertIcon: 'error',
+                        showConfirmButton: true,
+                        timer: false,
+                        ruta: 'login'
+                    });
+                } else {
+                    req.session.loggedin = true;
+                    req.session.name = results[0].name;
+                    req.session.rol = results[0].rol; // Guarda el rol en la sesión
+    
+                    let redirectPath = results[0].rol === 'aseguradora' ? '/create-order' : '/';
+                    
+                    res.render('login', {
+                        alert: true,
+                        alertTitle: "Conexión exitosa",
+                        alertMessage: '¡Login Correcto!',
+                        alertIcon: 'success',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        ruta: 'create-order'
+                    });
+                }
+            });
+        } else {
+            res.render('login', {
+                alert: true,
+                alertTitle: "Advertencia",
+                alertMessage: 'Por favor ingrese un usuario y/o contraseña',
+                alertIcon: 'warning',
+                showConfirmButton: true,
+                timer: 1500,
+                ruta: 'login'
+            });
+        }
+    });
+    
 
 app.get('/', (req, res) => {
     if (req.session.loggedin) {
@@ -135,7 +149,7 @@ app.get('/', (req, res) => {
 
 app.get('/logout', (req,res)=>{
     req.session.destroy(()=>{
-        res.redirect('/')
+        res.redirect('login')
     })
 })
 
@@ -143,9 +157,23 @@ app.get('/logout', (req,res)=>{
 
 app.get('/create-order', (req, res) => {
     if (req.session.loggedin) {
-        res.render('create-order', {
-            login: true,
-            name: req.session.name
+        // Verificar el rol del usuario
+        connection.query('SELECT rol FROM users WHERE name = ?', [req.session.name], (err, results) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).send('Error en la base de datos');
+            }
+
+            if (results.length > 0 && results[0].rol === 'aseguradora') {
+                // Si el usuario tiene el rol adecuado
+                res.render('create-order', {
+                    login: true,
+                    name: req.session.name
+                });
+            } else {
+                // Si el usuario no tiene el rol adecuado
+                res.redirect('/'); // Redirigir a la página principal o a una página de acceso denegado
+            }
         });
     } else {
         res.redirect('/login');
