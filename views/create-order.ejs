@@ -22,15 +22,16 @@
                 <div>
                     <label for="workshop_type">Tipo de taller:</label>
                     <select name="workshop_type" id="workshop_type">
-                        <option value="Automotriz">Automotriz</option>
-                        <option value="Chapa y Pintura">Chapa y Pintura</option>
-                        <option value="Sacabollos">Sacabollos</option>
+                        <option value="automotriz">Automotriz</option>
+                        <option value="chapa_y_pintura">Chapa y Pintura</option>
+                        <option value="sacabollos">Sacabollos</option>
                     </select>
                 </div>
                 <div>
                     <label for="description">Descripción:</label>
                     <textarea name="description" id="description" required></textarea>
                 </div>
+                <!-- Campos del vehículo -->
                 <div>
                     <label for="brand">Marca:</label>
                     <input type="text" name="brand" id="brand" required>
@@ -55,12 +56,21 @@
                     <label for="color">Color:</label>
                     <input type="text" name="color" id="color" required>
                 </div>
+                <!-- Campos del propietario -->
+                <div>
+                    <label for="owner_name">Nombre del Propietario:</label>
+                    <input type="text" name="owner_name" id="owner_name" required>
+                </div>
+                <div>
+                    <label for="owner_phone">Teléfono del Propietario:</label>
+                    <input type="text" name="owner_phone" id="owner_phone" required>
+                </div>
                 <button type="submit">Crear Orden</button>
             </form>
         </div>
-        <%} else { %>
-            <h1><strong><%= name %></strong></h1>   
-            <a href="login" class="a-login">Ir a Login</a>
-        <% } %>
+    <% } else { %>
+        <h1><strong><%= name %></strong></h1>   
+        <a href="login" class="a-login">Ir a Login</a>
+    <% } %>
 </body>
 </html>

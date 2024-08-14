@@ -139,7 +139,83 @@ app.get('/logout', (req,res)=>{
     })
 })
 
+////////////////
 
+app.get('/create-order', (req, res) => {
+    if (req.session.loggedin) {
+        res.render('create-order', {
+            login: true,
+            name: req.session.name
+        });
+    } else {
+        res.redirect('/login');
+    }
+});
+
+// Ruta para procesar la creación de órdenes
+app.post('/create-order', (req, res) => {
+    const {
+        username,
+        workshop_type,
+        description,
+        brand,
+        model,
+        year,
+        chassis_number,
+        license_plate,
+        color,
+        owner_name,
+        owner_phone
+    } = req.body;
+
+    // Buscar el user_id basado en el username
+    connection.query('SELECT user_id FROM users WHERE user = ?', [username], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Error en la base de datos');
+        }
+
+        if (results.length > 0) {
+            const user_id = results[0].user_id;
+
+            // Insertar la nueva orden de trabajo
+            connection.query('INSERT INTO work_orders SET ?', {
+                user_id,
+                workshop_type,
+                description
+            }, (err, results) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).send('Error al crear la orden de trabajo');
+                }
+
+                const work_order_id = results.insertId;
+
+                // Insertar el coche asociado con la orden de trabajo
+                connection.query('INSERT INTO cars SET ?', {
+                    work_order_id,
+                    brand,
+                    model,
+                    year,
+                    chassis_number,
+                    license_plate,
+                    color,
+                    owner_name,
+                    owner_phone
+                }, (err) => {
+                    if (err) {
+                        console.error(err);
+                        return res.status(500).send('Error al crear el coche');
+                    }
+
+                    res.send('Orden de trabajo y coche creados con éxito');
+                });
+            });
+        } else {
+            res.status(404).send('Usuario no encontrado');
+        }
+    });
+});
 
 
 
@@ -150,4 +226,3 @@ app.get('/logout', (req,res)=>{
 app.listen(3000, (req, res) => {
     console.log('SERVER RUNNING IN http://localhost:3000');
 })
-
