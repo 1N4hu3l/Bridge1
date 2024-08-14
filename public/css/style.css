@@ -1,0 +1,260 @@
+* {
+    font-family: sans-serif;
+}
+
+body {
+    background-color: #111111;
+    color: white;
+    margin: auto;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.login_form,
+container {
+    width: 300px;
+    margin: 0 auto;
+}
+
+.login_form {
+    text-align: center;
+    padding: 70px 0 10px 0;
+}
+
+.login_form input[type="password"],
+.login_form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    font-size: 16px;
+    border-radius: 5px;
+    outline: none;
+
+}
+
+.btn-login {
+    width: 50%;
+    padding: 10px;
+    border: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: medium;
+    outline: none;
+    border-radius: 5px;
+}
+
+.btn-login:hover,
+.btn-login:active {
+    color: white;
+    background-color: rgb(91, 91, 247);
+    transition: 500ms;
+}
+
+.btn-login:focus {
+    box-shadow: 0 0 0 5px rgb(211, 196, 233);
+}
+
+a {
+    text-decoration: none;
+    color: rgb(91, 91, 247);
+    font-size: 18px;
+}
+
+
+
+
+/* Estilos de link para ir a LOGIN*/
+.a-login:link,
+.a-login:visited {
+    background-color: white;
+    color: black;
+    border: 2px solid #10B981;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.a-login:hover,
+.a-login:active {
+    background-color: #10B981;
+    color: white;
+}
+
+/* Estilos de link para realizar el LOGOUT*/
+.a-logout:link,
+.a-logout:visited {
+    background-color: white;
+    color: black;
+    border: 2px solid #F87171;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.a-logout:hover,
+.a-logout:active {
+    background-color: #F87171;
+    color: white;
+}
+
+
+/* Form register*/
+
+/* Estilos boton CANCELAR*/
+.btn-cancel {
+    width: 50%;
+    padding: 10px;
+    background-color: #9CA3AF;
+    border: 0;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: medium;
+    color: #ffffff;
+    text-align: center;
+    margin-top: 20px;
+    /*Paradarlaaparienciadeunboton*/
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.btn-cancel:hover,
+.btn-cancel:active {
+    color: #fff;
+    background-color: #6B7280;
+    border-color: #6B7280;
+    transition: 500ms;
+    -webkit-transition: 500ms;
+    -moz-transition: 500ms;
+    -ms-transition: 500ms;
+    -o-transition: 500ms;
+}
+
+.btn-cancel:focus {
+    box-shadow: 0 0 0 3px #6B7280;
+}
+
+/* Estilos boton GUARDAR*/
+.btn-save {
+    width: 50%;
+    padding: 10px;
+    background-color: #1D4ED8;
+    border: 0;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: medium;
+    color: #ffffff;
+    margin-top: 20px;
+    /*Paradarlaaparienciadeunboton*/
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.btn-save:hover,
+.btn-save:active {
+    color: #fff;
+    background-color: #1E3A8A;
+    border-color: #1E3A8A;
+    transition: 500ms;
+    -webkit-transition: 500ms;
+    -moz-transition: 500ms;
+    -ms-transition: 500ms;
+    -o-transition: 500ms;
+}
+
+.btn-save:focus {
+    box-shadow: 0 0 0 3px #1E3A8A;
+}
+
+/* form User Registration */
+.register-form {
+    width: 400px;
+    margin: 0 auto;
+    padding: 0px 20px 60px 20px;
+    margin-top: 35px;
+    font-family: roboto;
+    text-align: left !important;
+    box-shadow: 0 19px 38px rgba(173, 173, 173, 0.4), 0 15px 12px rgba(173, 173, 173, 0.4);
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    border: rgb(80, 80, 80) solid 1px;
+}
+
+.register-form h1 {
+    text-align: center;
+    font-size: 22px;
+    padding: 70px 0 10px 0;
+
+}
+
+.register-form input[type="password"],
+.register-form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+/* Estilos para el select dropdown */
+.select-css {
+    display: block;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.3;
+    padding: .4em 1.4em .3em .8em;
+    width: 200px;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    margin-bottom: 10px;
+    background-color: #f5f5f5;
+}
+
+.select-css::-ms-expand {
+    display: none;
+}
+
+.select-css:hover {
+    border-color: #888;
+}
+
+.select-css:focus {
+    border-color: #aaa;
+    box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+    box-shadow: 0 0 0 3px -moz-mac-focusring;
+    color: #222;
+    outline: none;
+}
+
+.select-css option {
+    font-weight: normal;
+}
