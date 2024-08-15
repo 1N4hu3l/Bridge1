@@ -157,7 +157,6 @@ app.get('/logout', (req,res)=>{
 
 app.get('/create-order', (req, res) => {
     if (req.session.loggedin) {
-        // Verificar el rol del usuario
         connection.query('SELECT rol FROM users WHERE name = ?', [req.session.name], (err, results) => {
             if (err) {
                 console.error(err);
@@ -165,18 +164,16 @@ app.get('/create-order', (req, res) => {
             }
 
             if (results.length > 0 && results[0].rol === 'aseguradora') {
-                // Si el usuario tiene el rol adecuado
                 res.render('create-order', {
                     login: true,
                     name: req.session.name
                 });
             } else {
-                // Si el usuario no tiene el rol adecuado
-                res.redirect('/'); // Redirigir a la página principal o a una página de acceso denegado
+                res.redirect('/'); // Usuario no autorizado
             }
         });
     } else {
-        res.redirect('/login');
+        res.redirect('/login'); // No autenticado
     }
 });
 
