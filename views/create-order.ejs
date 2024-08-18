@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Order</title>
+    <link rel="stylesheet" href="resource/css/style.css">
+</head>
+<body>
+
+    <h1>Create Work Order</h1>
+
+    <div class="register-form">
+        <form action="/create-order" method="post">
+            <br>
+            <!-- User del Taller -->
+            <label for="user">User del Taller</label>
+            <input type="text" name="user" id="user" required>
+
+            <!-- Tipo de Taller -->
+            <label for="workshop_type">Tipo de Taller</label>
+            <select name="workshop_type" id="workshop_type" required>
+                <option value="automotriz">Automotriz</option>
+                <option value="chapa_y_pintura">Chapa y Pintura</option>
+                <option value="sacabollos">Sacabollos</option>
+            </select> <br>
+            <br>
+            <!-- Descripción de la Orden -->
+            <label for="description">Descripción</label>
+            <textarea name="description" id="description" required></textarea>
+
+            <!-- Información del Vehículo -->
+            <h3>Información del Vehículo</h3>
+
+            <label for="brand">Marca</label>
+            <input type="text" name="brand" id="brand" required> <br>
+
+            <label for="model">Modelo</label>
+            <input type="text" name="model" id="model" required><br><br>
+
+            <label for="year">Año</label>
+            <input type="number" name="year" id="year" required><br><br>
+
+            <label for="chassis_number">Número de Chasis</label>
+            <input type="text" name="chassis_number" id="chassis_number" required><br>
+
+            <label for="license_plate">Placa</label>
+            <input type="text" name="license_plate" id="license_plate" required><br>
+
+            <label for="color">Color</label>
+            <input type="text" name="color" id="color" required><br>
+
+            <label for="owner_name">Nombre del Propietario</label>
+            <input type="text" name="owner_name" id="owner_name" required>
+
+            <label for="owner_phone">Teléfono del Propietario</label>
+            <input type="text" name="owner_phone" id="owner_phone" required>
+
+            <!-- Botón de Envío -->
+            <div style="display: inline;">
+                <a href="/" class="btn-cancel">Cancelar</a><input type="submit" value="Crear Orden" class="btn-save">
+            </div>
+
+        </form>
+    </div>
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <% if (typeof alert !="undefined" ) { %>
+        <script>
+            Swal.fire({
+                title: '<%= alertTitle %>',
+                text: '<%= alertMessage %>',
+                icon: '<%= alertIcon %>',
+                showConfirmButton: <%= showConfirmButton %>,
+                timer: <%= timer %>
+            }).then(() => {
+                if ('<%= alertIcon %>' === 'success') {
+                    window.location = '/';
+                }
+            });
+        </script>
+    <% } %>
+
+
+</body>
+</html>
