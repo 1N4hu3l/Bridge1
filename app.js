@@ -153,10 +153,11 @@ app.get('/create-order', (req, res) => {
 app.post('/create-order', (req, res) => {
     const { user, workshop_type, description, brand, model, year, chassis_number, license_plate, color, owner_name, owner_phone } = req.body;
 
+    // Primero, obtenemos el user_id del taller
     const queryUser = "SELECT user_id FROM users WHERE user = ?";
     connection.query(queryUser, [user], (err, result) => {
         if (err || result.length === 0) {
-            console.log(err);  // Depuración
+            console.log(err);
             res.render('create-order', {
                 alertTitle: "Error",
                 alertMessage: "Taller no encontrado.",
@@ -167,27 +168,29 @@ app.post('/create-order', (req, res) => {
         } else {
             const user_id = result[0].user_id;
 
-            const queryOrder = "INSERT INTO work_orders (user_id, workshop_type, description) VALUES (?, ?, ?)";
-            connection.query(queryOrder, [user_id, workshop_type, description], (err, result) => {
+            // Luego, insertamos los datos del vehículo en la tabla cars
+            const queryCar = "INSERT INTO cars (brand, model, year, chassis_number, license_plate, color, owner_name, owner_phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            connection.query(queryCar, [brand, model, year, chassis_number, license_plate, color, owner_name, owner_phone], (err, result) => {
                 if (err) {
-                    console.log(err);  // Depuración
+                    console.log(err);
                     res.render('create-order', {
                         alertTitle: "Error",
-                        alertMessage: "Error al crear la orden.",
+                        alertMessage: "Error al registrar el vehículo.",
                         alertIcon: "error",
                         showConfirmButton: true,
                         timer: false
                     });
                 } else {
-                    const work_order_id = result.insertId;
+                    const car_id = result.insertId;  // Obtenemos el car_id recién insertado
 
-                    const queryCar = "INSERT INTO cars (work_order_id, brand, model, year, chassis_number, license_plate, color, owner_name, owner_phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                    connection.query(queryCar, [work_order_id, brand, model, year, chassis_number, license_plate, color, owner_name, owner_phone], (err, result) => {
+                    // Ahora, insertamos la orden de trabajo en work_orders con el car_id
+                    const queryOrder = "INSERT INTO work_orders (user_id, car_id, workshop_type, description) VALUES (?, ?, ?, ?)";
+                    connection.query(queryOrder, [user_id, car_id, workshop_type, description], (err, result) => {
                         if (err) {
-                            console.log(err);  // Depuración
+                            console.log(err);
                             res.render('create-order', {
                                 alertTitle: "Error",
-                                alertMessage: "Error al registrar el vehículo.",
+                                alertMessage: "Error al crear la orden.",
                                 alertIcon: "error",
                                 showConfirmButton: true,
                                 timer: false
