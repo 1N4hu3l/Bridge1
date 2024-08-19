@@ -258,3 +258,64 @@ a {
 .select-css option {
     font-weight: normal;
 }
+
+/* *//** */
+/* Estilos para la sección de órdenes */
+#orders-section {
+    margin: 20px auto;
+    width: 80%;
+    background-color: #1f1f1f;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#orders-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+#orders-section th, #orders-section td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #444;
+}
+
+#orders-section th {
+    background-color: #333;
+}
+
+#orders-section td {
+    background-color: #222;
+}
+
+.order-management {
+    display: flex; /* Usar flexbox para centrar el contenido */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    /*height: 100vh; /* Hacer que el contenedor ocupe toda la altura de la página */
+    margin-top: 50px; /* Eliminar márgenes por defecto */
+}
+
+/* Estilos para el botón de gestión de órdenes */
+.order-management button {
+    background-color: #333; /* Color gris oscuro */
+    color: #fff; /* Color de texto blanco */
+    border: none; /* Sin borde */
+    width: 150px; /* Ancho fijo para hacer el botón cuadrado */
+    height: 150px; /* Altura fija igual al ancho para mantener la forma cuadrada */
+    display: flex; /* Usar flexbox para centrar el contenido del botón */
+    align-items: center; /* Centrar verticalmente el texto */
+    justify-content: center; /* Centrar horizontalmente el texto */
+    font-size: 16px; /* Tamaño de fuente */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Manito en hover */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+.order-management button:hover,
+.order-management button:focus {
+    background-color: #555; /* Gris más claro para hover/focus */
+    color: #fff; /* Texto blanco en hover/focus */
+}

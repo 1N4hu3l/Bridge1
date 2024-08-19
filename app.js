@@ -65,8 +65,7 @@ app.post('/register', async (req, res) => {
     app.post('/auth', async (req, res) => {
         const user = req.body.user;
         const pass = req.body.pass;
-        let passwordHash = await bcryptjs.hash(pass, 8);
-        
+    
         if (user && pass) {
             connection.query('SELECT * FROM users WHERE user = ?', [user], async (error, results) => {
                 if (results.length == 0 || !(await bcryptjs.compare(pass, results[0].pass))) {
@@ -82,7 +81,8 @@ app.post('/register', async (req, res) => {
                 } else {
                     req.session.loggedin = true;
                     req.session.name = results[0].name;
-                    req.session.rol = results[0].rol;  // Asegúrate de almacenar el rol en la sesión
+                    req.session.rol = results[0].rol;  
+                    req.session.user_id = results[0].user_id;  // Agregar user_id a la sesión
     
                     // Redirigir según el rol del usuario
                     if (results[0].rol === 'aseguradora') {
@@ -120,20 +120,42 @@ app.post('/register', async (req, res) => {
             });
         }
     });
-app.get('/', (req, res) => {
-    if (req.session.loggedin) {
-        res.render('index', {
-            login: true,
-            name: req.session.name
-        });
-    } else {
-        res.render('index', {
-            login: false,
-            name: 'Debe iniciar sesión',
-        });
-    }
-    res.end();
-});
+    
+    app.get('/', (req, res) => {
+        if (req.session.loggedin && req.session.rol === 'taller') {
+            const query = `
+                SELECT wo.order_id, wo.workshop_type, wo.status, wo.created_at, 
+                c.brand, c.model, c.owner_name, c.owner_phone
+                FROM work_orders wo
+                JOIN cars c ON wo.car_id = c.car_id
+                WHERE wo.user_id = ?`;
+    
+            connection.query(query, [req.session.user_id], (error, results) => {
+                if (error) {
+                    console.log(error);
+                    res.render('index', {
+                        login: true,
+                        name: req.session.name,
+                        workOrders: []
+                    });
+                } else {
+                    res.render('index', {
+                        login: true,
+                        name: req.session.name,
+                        workOrders: results
+                    });
+                }
+            });
+        } else {
+            res.render('index', {
+                login: false,
+                name: 'Debe iniciar sesión',
+            });
+        }
+    });
+    
+    
+
 app.get('/logout', (req,res)=>{
     req.session.destroy(()=>{
         res.redirect('/')

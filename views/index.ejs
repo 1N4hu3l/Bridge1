@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bridge</title>
     <link rel="stylesheet" href="resource/css/style.css">
+    <script>
+        function toggleOrders() {
+            const ordersSection = document.getElementById('orders-section');
+            if (ordersSection.style.display === 'none' || ordersSection.style.display === '') {
+                ordersSection.style.display = 'block';
+            } else {
+                ordersSection.style.display = 'none';
+            }
+        }
+    </script>
 </head>
 <body>
     <h1>Pagina de inicio</h1>
@@ -12,13 +22,44 @@
         <h1>Usuario conectado: <strong><%= name %></strong></h1>                        
         <a href="logout" class="a-logout">Logout</a>
 
-        
-    <%} else { %>
+        <!-- Botón para gestionar órdenes -->
+        <div class="order-management">
+            <button onclick="toggleOrders()">Gestión de Órdenes</button>
+        </div>
+
+        <!-- Sección de la grilla de órdenes de trabajo -->
+        <div id="orders-section" style="display:none;">
+            <h2>Órdenes de Trabajo</h2>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Nº de Orden</th>
+                        <th>Tipo de Trabajo</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Nombre del Propietario</th>
+                        <th>Contacto del Propietario</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% workOrders.forEach(order => { %>
+                        <tr>
+                            <td><%= order.order_id %></td>
+                            <td><%= order.workshop_type %></td>
+                            <td><%= order.brand %></td>
+                            <td><%= order.model %></td>
+                            <td><%= order.owner_name %></td>
+                            <td><%= order.owner_phone %></td>
+                            <td><%= order.status %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    <% } else { %>
         <h1><strong><%= name %></strong></h1>   
         <a href="login" class="a-login">Ir a Login</a>
     <% } %>
-
-
-
 </body>
 </html>
